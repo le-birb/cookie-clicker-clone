@@ -3,7 +3,11 @@
 local composer = require("composer")
 local widget = require("widget")
 
-local userData = require("userData")
+local user_data = require("userData")
+
+local user_cookies = user_data[1]
+local user_tap_strength = user_data[2]
+local user_buildings = user_data[3]
 
 local scene = composer.newScene()
 
