@@ -5,11 +5,13 @@ local user_data_m = {} -- here is a table
 
 user_data_m[1] = nil --number of cookies the user has
 user_data_m[2] = nil --how many cookies earned per tap
-user_data_m[3] = {} --stores building dataa
+user_data_m[3] = nil --how many souls the user has collected
+user_data_m[10] = {} --stores building dataa
 
 local user_cookies = user_data[1]
 local user_tap_strength = user_data[2]
-local user_buildings = user_data[3]
+local user_souls = user_data[3]
+local user_buildings = user_data[10]
 
 function user_data_m.save(file_name) 
   

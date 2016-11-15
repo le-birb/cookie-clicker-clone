@@ -5,7 +5,8 @@ local userData = require "userData"
 
 local user_cookies = user_data[1]
 local user_tap_strength = user_data[2]
-local user_buildings = user_data[3]
+local user_souls = user_data[3]
+local user_buildings = user_data[10]
 
 -- this function handles the event for when and/or if the button is pressed
 local function handleCookieBtn(event)
