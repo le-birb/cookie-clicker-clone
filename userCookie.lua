@@ -10,10 +10,6 @@ local user_tap_strength = user_data[2]
 local user_souls = user_data[3]
 local user_buildings = user_data[10]
 
---local saveFunctions = require "save.lua"
-
---local save = saveFunctions.save
-
 local scene = composer.newScene() 
 
 
