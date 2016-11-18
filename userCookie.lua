@@ -5,11 +5,6 @@ local widget = require "widget"
 
 local user_data = require "userData"
 
-local user_cookies = user_data[1]
-local user_tap_strength = user_data[2]
-local user_souls = user_data[3]
-local user_buildings = user_data[10]
-
 local scene = composer.newScene() 
 
 
@@ -17,8 +12,8 @@ local function cookieTapped(event)
 
   if event.phase == "ended" then
 
-    user_cookies = user_cookies + 1 
-    cookieCount.text = "You have " .. user_cookies .. " cookies!"
+    user_data[1] = user_data[1] + 1 
+    cookieCount.text = "You have " .. user_data[1] .. " cookies!"
     
   end
 
@@ -26,7 +21,7 @@ end
 
 
 local function update()
-  cookieCount.text = "You have " .. user_cookies .. " cookies!"
+  cookieCount.text = "You have " .. user_data[1] .. " cookies!"
 end
 timer.performWithDelay( 100, update, -1 )
 

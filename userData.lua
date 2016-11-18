@@ -1,19 +1,14 @@
 
 local io = require "io"
 
-local user_data_m = {} -- here is a table
+local user_data = {} -- here is a table
 
-user_data_m[1] = nil --number of cookies the user has
-user_data_m[2] = nil --how many cookies earned per tap
-user_data_m[3] = nil --how many souls the user has collected
-user_data_m[10] = {} --stores building dataa
+user_data[1] = nil --number of cookies the user has
+user_data[2] = nil --how many cookies earned per tap
+user_data[3] = nil --how many souls the user has collected
+user_data[10] = {} --stores building dataa
 
-local user_cookies = user_data[1]
-local user_tap_strength = user_data[2]
-local user_souls = user_data[3]
-local user_buildings = user_data[10]
-
-function user_data_m.save(file_name) 
+function user_data.save(file_name) 
   
   --open the target file in write mode
   local file = io.open(file_name..".txt", "w")
@@ -22,15 +17,15 @@ function user_data_m.save(file_name)
   io.output(file)
   
   --print cookie amount and tap strength
-  io.write("cookies "..tostring(user_cookies).."\n")
-  io.write("tap_strength "..tostring(user_tap_strength).."\n")
+  io.write("cookies "..tostring(user_data[1]).."\n")
+  io.write("tap_strength "..tostring(user_data[2]).."\n")
   
   --write buildings to save file
   --start with "buildings {"
   io.write("buildings {\n")
   
   --retrieve the table that holds building data
-  local buildings = user_buildings
+  local buildings = user_data[10]
   
   --iterate through the buildings
   for key, element in pairs(buildings) do
@@ -53,7 +48,7 @@ function user_data_m.save(file_name)
   
 end
 
-function user_data_m.load(file_name)
+function user_data.load(file_name)
   
   --open target file in read mode
   local file = io.open(file_name, "r")
@@ -78,7 +73,7 @@ function user_data_m.load(file_name)
       assert(string.find(line, "^cookies".."%s+".."%d+"), "ERROR: number expected after \'cookies\'")
       
       --load the number as number of cookies
-      user_cookies =  tonumber(string.sub(string.find(line, "%d+")))
+      user_data[1] =  tonumber(string.sub(string.find(line, "%d+")))
       
     --if the line begins with tap_strength
     elseif string.find(line, "^tap_strength".."%s+") then
@@ -87,7 +82,7 @@ function user_data_m.load(file_name)
       assert(string.find(line, "^cookies".."%s+".."%d+", "ERROR: number expected after tap_strength")
       
 	  --load tap_strength
-      user_tap_strength = tonumber(string.sub(string.find(line, "%d+")))
+      user_data[2] = tonumber(string.sub(string.find(line, "%d+")))
       
 	--if the line begins with buildings
     elseif string.find(line, "^buildings") then
@@ -117,10 +112,10 @@ function user_data_m.load(file_name)
 		  local building_name = string.sub(string.find(line, "%d+"))
 		  
 		  --initialize the table to hold the data for the building
-		  user_buildings[building_name] = {}
+		  user_data[10][building_name] = {}
 		  
 		  --set a short name for the table
-		  local building_t = user_buildings[building_name]
+		  local building_t = user_data[10][building_name]
 		  
 		  --create a loop to store the building data
 		  for key, element in pairs({"owned", "cps", "base_cost"}) do
@@ -147,10 +142,10 @@ function user_data_m.load(file_name)
   end
   
   --throw errors if eithet cookies or tap_strength were not found
-  assert(user_cookies, "ERROR: did not find a value for cookies" )
+  assert(user_data[1], "ERROR: did not find a value for cookies" )
   
   assert(user_data.t["tap_strength", "ERROR: did not find a value for tap_strength")
   
 end
 
-return user_data_m 
+return user_data 
