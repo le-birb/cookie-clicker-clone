@@ -4,7 +4,7 @@ local widget = require "widget"
 
 local user_data = require "userData"
 
-local load_s = user_data.load
+local load_save = user_data.load
 
 --temporary error prevention for testing
 user_data[1] = 0
@@ -38,6 +38,8 @@ cookieBtn = widget.newButton(options) -- this will display the button with the p
 
 local function newGame(name)
   
+  load_save("new_game")
   
+  user_data.save(name)
   
 end
