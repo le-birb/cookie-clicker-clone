@@ -1,0 +1,44 @@
+
+
+local playerHasSpoopy = false
+
+local spoopy_functions = {}
+
+function spoopy_spawn()
+
+
+	--[[local spoopy_stats = 
+	{
+		"power" = 1,
+		"movement" = 1 --TODO
+	}]]--
+	
+	local spoopy_options =
+	{
+		frames =
+		{
+			{ -- frame 1
+				x = 0,
+				y = 0,
+				width = 16,
+				height = 26
+			},
+			{ -- frame 2
+				x = 16,
+				y = 0,
+				width = 16,
+				height = 26	
+			}
+		}
+	
+	}
+	
+	local spoopySheet = graphics.newImageSheet("resources/spoopyer.png", spoopy_options)
+	local spoopySprite = display.newImage( spoopySheet, 1)
+	
+
+end
+
+return spoopy_spawn()
+	
+	
