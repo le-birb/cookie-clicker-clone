@@ -1,4 +1,4 @@
-
+local math = require "math"
 
 local playerHasSpoopy = false
 
@@ -22,37 +22,45 @@ function spoopy_spawn()
 				y = 0,
 				width = 16,
 				height = 26
-			},
+			}--[[,
 			{ -- frame 2
 				x = 16,
 				y = 0,
 				width = 16,
 				height = 26	
-			}
+			} ]]--
 		}
 	
 	}
 	
-	--set the sprite sheet image to the configuration
 	local spoopySheet = graphics.newImageSheet("resources/spoopyer.png", spoopy_options)
-	local spoopySprite = display.newImage( spoopySheet, 1)
+		
 	
-	--experimenting with animation
+	local spoopySprite = display.newImage( spoopySheet, 1)
 	spoopySprite.y = display.contentCenterY * 0.5
 	spoopySprite.x = display.contentCenterX * 0.5
 	
-	local randoNumX = display.contentWidth
-	local randoNumY = display.contentHeight
 	
 	local function move_spoopy( event )
 	
-		local t = event.time * .005
+		local t = event.time * .002
+		local randoNumX = math.random(display.contentWidth)
+		local randoNumY = math.random(display.contentHeight)
+		
+		local move_params =
+		{
+			x = randoNumX,
+			y = randoNumY,
+			delay = math.random(1000, 10000),
+			time = math.random(3000, 5000),
+			transition = easing.outInQuad
+			
+		}
 	
-		spoopySprite.x =  spoopySprite.x + math.cos(t)--spoopySprite.x + 5
+		--spoopySprite.x =  spoopySprite.x + math.cos(t)--spoopySprite.x + 5
 		spoopySprite.y =  spoopySprite.y + math.sin(t)
-		if spoopySprite.x > display.contentWidth then
-			spoopySprite.x = display.contentCenterX
-		end
+
+		transition.moveTo( spoopySprite,  move_params)
 	end
 	
 	Runtime:addEventListener( "enterFrame", move_spoopy)
@@ -61,5 +69,3 @@ function spoopy_spawn()
 end
 
 return spoopy_spawn()
-	
-	
