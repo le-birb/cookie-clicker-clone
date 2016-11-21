@@ -33,8 +33,29 @@ function spoopy_spawn()
 	
 	}
 	
+	--set the sprite sheet image to the configuration
 	local spoopySheet = graphics.newImageSheet("resources/spoopyer.png", spoopy_options)
 	local spoopySprite = display.newImage( spoopySheet, 1)
+	
+	--experimenting with animation
+	spoopySprite.y = display.contentCenterY * 0.5
+	spoopySprite.x = display.contentCenterX * 0.5
+	
+	local randoNumX = display.contentWidth
+	local randoNumY = display.contentHeight
+	
+	local function move_spoopy( event )
+	
+		local t = event.time * .005
+	
+		spoopySprite.x =  spoopySprite.x + math.cos(t)--spoopySprite.x + 5
+		spoopySprite.y =  spoopySprite.y + math.sin(t)
+		if spoopySprite.x > display.contentWidth then
+			spoopySprite.x = display.contentCenterX
+		end
+	end
+	
+	Runtime:addEventListener( "enterFrame", move_spoopy)
 	
 
 end
