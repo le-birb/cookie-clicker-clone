@@ -1,12 +1,16 @@
 
 local composer = require "composer" 
-local widget = require "widget" 
-local userData = require "userData"
+local widget = require "widget"
 
-local user_cookies = user_data[1]
-local user_tap_strength = user_data[2]
-local user_souls = user_data[3]
-local user_buildings = user_data[10]
+local user_data = require "user_data"
+
+local load_save = user_data.load
+
+--temporary error prevention for testing
+user_data[1] = 0
+user_data[2] = 10
+user_data[3] = 0
+user_data[4] = 0
 
 -- this function handles the event for when and/or if the button is pressed
 local function handleCookieBtn(event)
@@ -16,7 +20,7 @@ local function handleCookieBtn(event)
     print("cookieBtn was pressed!") 
 
     display.remove(cookieBtn) 
-    composer.gotoScene( "userCookie" ) 
+    composer.gotoScene( "user_cookie" ) 
 
   end
 
@@ -32,3 +36,11 @@ local options = {
 
 
 cookieBtn = widget.newButton(options) -- this will display the button with the parameters 'options'
+
+local function newGame(name)
+  
+  load_save("new_game")
+  
+  user_data.save(name)
+  
+end

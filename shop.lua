@@ -3,12 +3,7 @@
 local composer = require("composer")
 local widget = require("widget")
 
-local user_data = require("userData")
-
-local user_cookies = user_data[1]
-local user_tap_strength = user_data[2]
-local user_souls = user_data[3]
-local user_buildings = user_data[10]
+local user_data = require("user_data")
 
 local scene = composer.newScene()
 
@@ -16,7 +11,7 @@ local function moveToCookie(event)
 
   if event.phase == "ended" then
 
-    composer.gotoScene( "userCookie" )
+    composer.gotoScene( "user_cookie" )
 
   end
 
@@ -42,8 +37,6 @@ function scene:create(event)
 
   sceneGroup:insert(intro)
   sceneGroup:insert(returnToCookie)
-  sceneGroup:insert(cookieFarm)
-  sceneGroup:insert(cookiePlantation)
 end
 
 function scene:show(event)
