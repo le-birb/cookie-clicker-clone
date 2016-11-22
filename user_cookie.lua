@@ -6,8 +6,6 @@ local widget = require "widget"
 local user_data = require "user_data"
 local spoopy = require "spoopy"
 local murder_children = require "murder_children"
-local m_c_functions = require "m_c_functions"
-
 local scene = composer.newScene() 
 
 local cookie_count_text

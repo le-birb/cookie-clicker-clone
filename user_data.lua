@@ -3,11 +3,11 @@ local io = require "io"
 
 local user_data = {} -- here is a table
 
-user_data[1] = nil --number of cookies the user has
-user_data[2] = nil --how many cookies earned per tap
-user_data[3] = nil --how many souls the user has collected
-user_data[4] = nil --cps
-user_data[10] = {} --stores building dataa
+user_data.cookies = nil --number of cookies the user has
+user_data.cookie_tap = nil --how many cookies earned per tap
+user_data.souls = nil --how many souls the user has collected
+user_data.cps = nil --cps
+user_data.buildings = {} --stores building dataa
 
 function user_data.save(file_name) 
   
