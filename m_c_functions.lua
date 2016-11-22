@@ -1,5 +1,6 @@
 
 local widget = require "widget"
+<<<<<<< HEAD
 local user_data = require "user_data"
 local timer = require "timer"
 
@@ -28,10 +29,31 @@ function m_c_functions.spawn(child_type)
     shape = "circle",
     radius = 20,
     onEvent = function() murder_child.health = murder_child.health - 1 end,
+=======
+local user_data = require "userData.lua"
+
+
+local murder_children_functions = {}
+
+function murder_children_functions.spawn(child_type)
+  
+  local murder_child = {
+    "health" = murder_children[child_type].health,
+    "soul_reward" = murder_children[child_type].soul_reward,
+    "movement" = murder_children[child_type].movement,
+	}
+  
+  local mc_options = {
+    label = "M.C."
+    shape = "circle"
+    radius = 20
+    onEvent = function() murder_child.health -= 1 end,
+>>>>>>> e58c2b44275c2b65e7a7807933fc8fb35f826618
   }
   
   local murder_child_object = widget.newButton
   
+<<<<<<< HEAD
   mc_move = coroutine.create(murder_children[child_type].movement)
   
   user_data[4] = user_data[4] - murder_child.cps_eaten
@@ -62,3 +84,14 @@ function m_c_functions.kill(murder_child_object)
 end
 
 return m_c_functions
+=======
+  mc_move = coroutine.create(murder_children.movement)
+  
+  user_data[3] += murder_child.soul_reward
+  
+  display.remove(murder_child_object)
+  
+end
+
+return murder_chlidren_functions
+>>>>>>> e58c2b44275c2b65e7a7807933fc8fb35f826618
