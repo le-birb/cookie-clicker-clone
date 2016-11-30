@@ -43,7 +43,7 @@ function spoopy_spawn()
 	
 	local function move_spoopy( event )
 	
-		local t = event.time * 0.02 --0.02
+		local t = event.time * 0.02
 		local randoNumX = math.random(display.contentWidth)
 		local randoNumY = math.random(display.contentHeight)
 		

@@ -6,8 +6,7 @@ local widget = require "widget"
 local user_data = require "user_data"
 local spoopy = require "spoopy"
 local murder_children = require "murder_children"
-local m_c_functions = require "m_c_functions"
-
+local MC_sprite_options = require "MC_sprite_options"
 local scene = composer.newScene() 
 
 local cookie_count_text
@@ -16,8 +15,8 @@ local function cookieTapped(event)
 
   if event.phase == "ended" then
 
-    user_data[1] = user_data[1] + 1 
-    cookie_count_text.text = "You have " .. user_data[1] .. " cookies!"
+    user_data.cookies = user_data.cookies + 1 
+    cookie_count_text.text = "You have " .. user_data.cookies .. " cookies!"
     
   end
 
@@ -25,7 +24,7 @@ end
 
 
 local function update()
-  cookie_count_text.text = "You have " .. user_data[1] .. " cookies!"
+  cookie_count_text.text = "You have " .. user_data.cookies .. " cookies!"
 end
 timer.performWithDelay( 100, update, -1 )
 
@@ -93,7 +92,7 @@ function scene:create(event)
   local cookie_count_text_options = {
     x = display.contentWidth * 0.5,
     y = display.contentHeight * 0.2,
-    text = "You have " .. user_data[1] .. " cookies!"
+    text = "You have " .. user_data.cookies .. " cookies!"
   }
   
   cookie_count_text = display.newText(cookie_count_text_options)
@@ -116,7 +115,11 @@ function scene:create(event)
   print("doing thing")
   
   spoopy_spawn()
-  m_c_functions.spawn("basic")
+  --m_c_functions.spawn("basic")
+  --MC_spawn() --temp. testing
+  local basic1 = murder_children.new("basic", 3, 1, 0, murder_children:move() , basic_MC)
+  basic1:spawn()
+  
   
   print("did thing")
 

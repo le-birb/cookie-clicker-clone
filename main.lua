@@ -7,9 +7,9 @@ local user_data = require "user_data"
 local load_save = user_data.load
 
 --temporary error prevention for testing
-user_data[1] = 0
-user_data[2] = 10
-user_data[3] = 0
+user_data.cookies = 0
+user_data.cookie_tap = 10
+user_data.cps = 0
 user_data[4] = 0
 
 -- this function handles the event for when and/or if the button is pressed
