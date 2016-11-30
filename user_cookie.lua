@@ -14,8 +14,8 @@ local function cookieTapped(event)
 
   if event.phase == "ended" then
 
-    user_data[1] = user_data[1] + 1 
-    cookie_count_text.text = "You have " .. user_data[1] .. " cookies!"
+    user_data.cookies = user_data.cookies + 1 
+    cookie_count_text.text = "You have " .. user_data.cookies .. " cookies!"
     
   end
 
@@ -23,7 +23,7 @@ end
 
 
 local function update()
-  cookie_count_text.text = "You have " .. user_data[1] .. " cookies!"
+  cookie_count_text.text = "You have " .. user_data.cookies .. " cookies!"
 end
 timer.performWithDelay( 100, update, -1 )
 
@@ -91,7 +91,7 @@ function scene:create(event)
   local cookie_count_text_options = {
     x = display.contentWidth * 0.5,
     y = display.contentHeight * 0.2,
-    text = "You have " .. user_data[1] .. " cookies!"
+    text = "You have " .. user_data.cookies .. " cookies!"
   }
   
   cookie_count_text = display.newText(cookie_count_text_options)
@@ -114,7 +114,7 @@ function scene:create(event)
   print("doing thing")
   
   spoopy_spawn()
-  m_c_functions.spawn("basic")
+  --m_c_functions.spawn("basic")
   
   print("did thing")
 
