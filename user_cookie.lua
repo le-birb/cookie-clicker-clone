@@ -41,38 +41,38 @@ function scene:create(event)
 
   local sceneGroup = self.view
   
-  	local spriteOptions =
-	{	
-		frames =
-		{
-			{ -- frame 1
-				x = 0,
-				y = 0,
-				width = 180,
-				height = 181
-			},
-			{ -- frame 2
-				x = 180,
-				y = 0,
-				width = 180,
-				height = 181	
-			}
-		
-		}
-		
-	}
-	
-	local cookieSheet = graphics.newImageSheet( "resources/PHCookie.png.png", spriteOptions)
-	
-	local cookieSheetOptions = 
-	{
-		onEvent = cookieTapped,
-		x = display.contentWidth * 0.5,
-		y = display.contentHeight * 0.5,
-		sheet = cookieSheet,
-		defaultFrame = 1,
-		overFrame = 2
-	}
+    local spriteOptions =
+  {  
+    frames =
+    {
+      { -- frame 1
+        x = 0,
+        y = 0,
+        width = 180,
+        height = 181
+      },
+      { -- frame 2
+        x = 180,
+        y = 0,
+        width = 180,
+        height = 181  
+      }
+    
+    }
+    
+  }
+  
+  local cookieSheet = graphics.newImageSheet( "resources/PHCookie.png.png", spriteOptions)
+  
+  local cookieSheetOptions = 
+  {
+    onEvent = cookieTapped,
+    x = display.contentWidth * 0.5,
+    y = display.contentHeight * 0.5,
+    sheet = cookieSheet,
+    defaultFrame = 1,
+    overFrame = 2
+  }
   
   local cookie = widget.newButton(cookieSheetOptions)                                    
 

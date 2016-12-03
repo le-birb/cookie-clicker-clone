@@ -19,6 +19,8 @@ function murder_children:new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
   
   self.__index = self
   
+  
+  
   return new_child
   
 end
