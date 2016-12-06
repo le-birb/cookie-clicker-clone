@@ -12,7 +12,7 @@ user_data.buildings = {} --stores building dataa
 function user_data.save(file_name) 
   
   --open the target file in write mode
-  local file = io.open("saves/"file_name, "w")
+  local file = io.open("saves/"..file_name, "w")
   
   --set the target file as the default output file
   io.output(file)
@@ -53,8 +53,10 @@ end
 
 function user_data.load(file_name)
   
+  local file_path = system.pathForFile("saves/"..file_name)
+  
   --open target file in read mode
-  local file = io.open("saves/"file_name, "r")
+  local file = io.open(file_path, "r")
   
   --set target file as the default input file
   io.input(file)
@@ -63,7 +65,7 @@ function user_data.load(file_name)
   local line_number = 0
   
   --iterate through each line of the file
-  for line in io.lines(file) do
+  for line in io.lines(file_path) do
     
   --increment the line counter each time the program moves down a line
   line_number = line_number + 1
@@ -76,31 +78,35 @@ function user_data.load(file_name)
       assert(string.find(line, "^cookies".."%s+".."%d+"), "ERROR: number expected after \'cookies\'")
       
       --load the number as number of cookies
-      user_data.cookies =  tonumber(string.sub(string.find(line, "%d+")))
+      user_data.cookies =  tonumber(string.sub(line, string.find(line, "%d+")))
+      
+      print("cookies : "..user_data.cookies)
       
     --if the line begins with tap_strength
     elseif string.find(line, "^tap_strength".."%s+") then
       
       --throw an error if there is no number
-      assert(string.find(line, "^tap_strength".."%s+".."%d+", "ERROR: number expected after tap_strength"))
+      assert(string.find(line, "^tap_strength".."%s+".."%d+"), "ERROR: number expected after tap_strength")
       
     --load tap_strength
-      user_data.cookie_tap = tonumber(string.sub(string.find(line, "%d+")))
+      user_data.cookie_tap = tonumber(string.sub(line, string.find(line, "%d+")))
     
     --if the line begins with souls
     elseif string.find(line, "^souls".."%s") then
       
       --throw an error if there is no number
-      assert(string.find(line, "^souls".."%s+".."%d+", "ERROR: number expected after souls"))
+      assert(string.find(line, "^souls".."%s+".."%d+"), "ERROR: number expected after souls")
       
     --load souls
-      user_data.cps = tonumber(string.sub(string.find(line, "%d+")))
+      user_data.cps = tonumber(string.sub(line, string.find(line, "%d+")))
     
   --if the line begins with buildings
     elseif string.find(line, "^buildings".."%s") then
     
+    
+    
     --throw an error if '{' is missing
-    assert(string.find(line, "^buildings".."%S".."\{"), "ERROR: \'{\' expected after buildings")
+    assert(string.find(line, "^buildings".."%s".."\{"), "ERROR: \'{\' expected after buildings")
       
     --move the file position to the next line
     io.read("*l")
@@ -136,7 +142,7 @@ function user_data.load(file_name)
             local element = string.sub(string.find(building_string, element.." %d+"))
             
             --save the number in the substring to the respective index
-            building_t[element] = tonumber(string.sub(string.find(owned, "%d+")))
+            building_t[element] = tonumber(string.sub(line, string.find(owned, "%d+")))
             
           end
           
@@ -156,7 +162,7 @@ function user_data.load(file_name)
   --throw errors if eithet cookies or tap_strength were not found
   assert(user_data.cookies, "ERROR: did not find a value for cookies" )
   
-  assert(user_data.t["tap_strength"], "ERROR: did not find a value for tap_strength")
+  assert(user_data.cookie_tap, "ERROR: did not find a value for tap_strength")
   
 end
 

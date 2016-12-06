@@ -1,0 +1,9 @@
+cookies 0
+tap_strength 1
+souls 0
+
+buildings {
+Farm owned 0 cps 0.5 base_cost 40
+Plantation owned 0 cps 2 base_cost 500
+Factory owned 1 cps 7 base_cost 2000
+}
