@@ -54,7 +54,7 @@ function scene:create(event)
     height = display.contentHeight *.1,
     left = display.contentWidth * .15,
     top = display.contentHeight * .9,
-    onEvent = new_game
+    onEvent = new_game,
   }
   
   ng_button = widget.newButton(ng_button_options)
@@ -82,17 +82,20 @@ local function make_file_buttons()
   --this creates an iterator which iterates through each file in a directory
   for file in lfs.dir("saves/") do
     
-  --create a button for each file in the directory
-    local file_button_options = {
-      width = display.contentWidth * .85,
-    height = display.contentHeight * .85,
-    label = file,
-    --when the button is pressed, load the corresponding file and begin the game
-    onEvent = function ()
-      load_file(file)
-      composer.gotoScene("user_cookie.lua")
-    end,
-    }
+    
+    if file != "new_game" then  
+      --create a button for each file in the directory
+      local file_button_options = {
+        width = display.contentWidth * .85,
+        height = display.contentHeight * .85,
+        label = file,
+        --when the button is pressed, load the corresponding file and begin the game
+        onEvent = function ()
+          load_file(file)
+          composer.gotoScene("user_cookie.lua")
+        end,
+      }
+    end
     
   file_button = widget.newButton(file_button_options)
   
