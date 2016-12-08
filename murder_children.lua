@@ -1,56 +1,42 @@
-local math = require "math"
+
 local MC_sprite_options = require "MC_sprite_options"
---types: basic, super, sneaky, fat, 
+local math = require "math"
 
-local MC_spawnTable = {}
+local murder_children = {}
+local mc_table = { __index = murder_children }
 
-local murder_children = {type = "", health = 0, soul_reward = 1, cps_eaten = 0}
-local mc_mt = {__index = murder_children}
 
-function murder_children:new(n_type, n_health, n_soul_reward, n_cps_eaten, n_move_func, sprite_obj)
-  
-  new_child = {
-  
-    type = n_type, 
-    health = n_health, 
-    soul_reward = n_soul_reward, 
-    cps_eaten = n_cps_eaten,
-    move = n_move_func,
-    sprite = sprite_obj
-    
-  }
-  self = mc_mt
-  return setmetatable(new_child, self)
-  --[[__index = self
-  setmetatable(new_child, self)
+function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_move_func, sprite_obj)
 
-  return new_child 
-  ]]--
-end
+	local new_child = {}
+	mc_type = n_type
+	HP = n_health
+	soul_reward = n_soul_reward
+	cps_eaten = n_cps_eaten
+	new_child.image = display.newImage(sprite_obj)
+	
+	local spawnX = 0
+	local spawnY = 0
 
-function murder_children:spawn()
-
-  --RNG used to spawn MC top, left, right, or bottom of screen--
+  --RNG used to spawn MC top(1), left(0), right(3), or bottom(4) of screen--
 	local spawn_RNG = math.random(1, 4)
 	if spawn_RNG == 1 then
-		self.sprite.x = 0
-		self.sprite.y = math.random(display.contentHeight)
+		spawnX = 0
+		spawnY = math.random(display.contentHeight)
 	elseif spawn_RNG == 2 then	
-		self.sprite.x = math.random(display.contentWidth)
-		self.sprite.y = 0
+		spawnX = math.random(display.contentWidth)
+		spawnY = 0
 	elseif spawn_RNG == 3 then
-		self.sprite.x = display.contentWidth
-		self.sprite.y = math.random(display.contentHeight)
+		spawnX = display.contentWidth
+		spawnY = math.random(display.contentHeight)
 	else
-		self.sprite.x = math.random(display.contentWidth)
-		self.sprite.y = display.contentHeight
+		spawnX = math.random(display.contentWidth)
+		spawnY = display.contentHeight
 	end	
+	new_child.image.x = spawnX
+	new_child.image.y = spawnY
 	
-	self.move()
-end
-
-function murder_children:move()
-
+	--cookie boundary
 	local cookie_coordX_RNG = math.random(display.contentHeight*0.25, display.contentHeight*0.5)
 	local cookie_coordY_RNG = math.random(display.contentWidth*0.40, display.contentWidth*0.75)
 	
@@ -66,13 +52,31 @@ function murder_children:move()
 			transition = easing.linear,
 		}
 		
-		transition.moveTo(self.sprite, move_params)
+		transition.moveTo(new_child.image, move_params)
 	end
 	
 	Runtime:addEventListener( "enterFrame", move_MC)
+	
+	local function mc_touch( event )
+		if( event.phase == "ended" and HP > 0) then	
+			HP = HP - 1
+			print("tapped!")
+		end	
+	end
+	new_child.image:addEventListener( "touch", mc_touch)
 
+	if(HP <= 0) then
+		display.remove( sprite_obj )
+	end	
+	
+	
+	return setmetatable (new_child, mc_table)
+	
 end
 
+return murder_children
+	
+	
 --[[
 --called when the child is murdered
 function murder_children:remove(m_c_table)
@@ -84,6 +88,6 @@ function murder_children:remove(m_c_table)
   m_c_table = nil
   self = nil
   
---end ]]--
+end
 
-return murder_children
+]]--

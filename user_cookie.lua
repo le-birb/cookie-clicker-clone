@@ -2,12 +2,14 @@
 
 local composer = require "composer"
 local widget = require "widget"
+local MC_sprite_options = require "MC_sprite_options"
 
 local user_data = require "user_data"
 local spoopy = require "spoopy"
 local murder_children = require "murder_children"
-local MC_sprite_options = require "MC_sprite_options"
 local scene = composer.newScene() 
+
+mcList = {}
 
 local cookie_count_text
 
@@ -42,38 +44,38 @@ function scene:create(event)
 
   local sceneGroup = self.view
   
-  	local spriteOptions =
-	{	
-		frames =
-		{
-			{ -- frame 1
-				x = 0,
-				y = 0,
-				width = 180,
-				height = 181
-			},
-			{ -- frame 2
-				x = 180,
-				y = 0,
-				width = 180,
-				height = 181	
-			}
-		
-		}
-		
-	}
-	
-	local cookieSheet = graphics.newImageSheet( "resources/PHCookie.png.png", spriteOptions)
-	
-	local cookieSheetOptions = 
-	{
-		onEvent = cookieTapped,
-		x = display.contentWidth * 0.5,
-		y = display.contentHeight * 0.5,
-		sheet = cookieSheet,
-		defaultFrame = 1,
-		overFrame = 2
-	}
+    local spriteOptions =
+  {  
+    frames =
+    {
+      { -- frame 1
+        x = 0,
+        y = 0,
+        width = 180,
+        height = 181
+      },
+      { -- frame 2
+        x = 180,
+        y = 0,
+        width = 180,
+        height = 181  
+      }
+    
+    }
+    
+  }
+  
+  local cookieSheet = graphics.newImageSheet( "resources/PHCookie.png.png", spriteOptions)
+  
+  local cookieSheetOptions = 
+  {
+    onEvent = cookieTapped,
+    x = display.contentWidth * 0.5,
+    y = display.contentHeight * 0.5,
+    sheet = cookieSheet,
+    defaultFrame = 1,
+    overFrame = 2
+  }
   
   local cookie = widget.newButton(cookieSheetOptions)                                    
 
@@ -115,11 +117,17 @@ function scene:create(event)
   print("doing thing")
   
   spoopy_spawn()
+  --MC_spawn()
+  --print(MC_sprite_options.basic_MC)
+  --local MC1 = murder_children:new("basic", 3, 1, 0, nil, MC_sprite_options.basic_MC)
+  --MC1:spawn()
   --m_c_functions.spawn("basic")
-  --MC_spawn() --temp. testing
-  local basic1 = murder_children.new("basic", 3, 1, 0, murder_children:move() , basic_MC)
-  basic1:spawn()
   
+  local function spawnMC()
+	mcList[#mcList+1] = murder_children.new("basic", 3, 1, 0, nil, MC_sprite_options.basic_mc_sheet)
+  end
+  
+  timer.performWithDelay(5000, spawnMC, 0)
   
   print("did thing")
 
