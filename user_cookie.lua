@@ -10,6 +10,8 @@ local murder_children = require "murder_children"
 local scene = composer.newScene() 
 
 mcList = {}
+local mc_count = 0
+local has_MCs = false
 
 local cookie_count_text
 
@@ -124,10 +126,20 @@ function scene:create(event)
   --m_c_functions.spawn("basic")
   
   local function spawnMC()
-	mcList[#mcList+1] = murder_children.new("basic", 3, 1, 0, nil, MC_sprite_options.basic_mc_sheet)
+	mcList[#mcList+1] = murder_children.new("basic", 3, 1, 0, nil, 
+	MC_sprite_options.basic_mc_sheet, MC_sprite_options, MC_sprite_options.sequences_basicMC)
+	mc_count = mc_count + 1
+	has_MCs = true
   end
+  timer.performWithDelay(3000, spawnMC, 0)
   
-  timer.performWithDelay(5000, spawnMC, 0)
+  while has_MCs do
+	  local function eat()
+	  print("eaten!")
+		user_data.cookies = user_data.cookies - 1
+	  end 
+	  timer.performWithDelay(3000, eat, 0)  
+  end 	  
   
   print("did thing")
 

@@ -12,7 +12,7 @@ user_data.buildings = {} --stores building dataa
 function user_data.save(file_name) 
   
   --open the target file in write mode
-  --local file = io.open("saves/"file_name, "w")
+  local file = io.open("saves/"..file_name, "w")
   
   --set the target file as the default output file
   io.output(file)
@@ -34,7 +34,7 @@ function user_data.save(file_name)
     
     --print the building name
     io.write(key.." ")
-	io.write()
+  io.write()
     
     --iterate through building parameters
     for parameter, value in pairs(element) do
@@ -54,7 +54,7 @@ end
 function user_data.load(file_name)
   
   --open target file in read mode
-  --local file = io.open("saves/"file_name, "r")
+  local file = io.open("saves/"..file_name, "r")
   
   --set target file as the default input file
   io.input(file)
@@ -65,9 +65,9 @@ function user_data.load(file_name)
   --iterate through each line of the file
   for line in io.lines(file) do
     
-	--increment the line counter each time the program moves down a line
-	line_number = line_number + 1
-	
+  --increment the line counter each time the program moves down a line
+  line_number = line_number + 1
+  
     --check if the line has relevant data
     --if the line begins with cookies
     if string.find(line, "^cookies".."%s") then
@@ -84,32 +84,32 @@ function user_data.load(file_name)
       --throw an error if there is no number
       assert(string.find(line, "^tap_strength".."%s+".."%d+", "ERROR: number expected after tap_strength"))
       
-	  --load tap_strength
+    --load tap_strength
       user_data.cookie_tap = tonumber(string.sub(string.find(line, "%d+")))
-	  
+    
     --if the line begins with souls
     elseif string.find(line, "^souls".."%s") then
       
       --throw an error if there is no number
       assert(string.find(line, "^souls".."%s+".."%d+", "ERROR: number expected after souls"))
       
-	  --load souls
+    --load souls
       user_data.cps = tonumber(string.sub(string.find(line, "%d+")))
-	  
-	--if the line begins with buildings
+    
+  --if the line begins with buildings
     elseif string.find(line, "^buildings".."%s") then
-	  
-	  --throw an error if '{' is missing
-	  assert(string.find(line, "^buildings".."%S".."\{"), "ERROR: \'{\' expected after buildings")
+    
+    --throw an error if '{' is missing
+    assert(string.find(line, "^buildings".."%S".."\{"), "ERROR: \'{\' expected after buildings")
       
-	  --move the file position to the next line
-	  io.read("*l")
-	  
-	  --increment line counter
-	  line_number = line_number + 1
-	  
-	  --read each line until "}" is found
-	  while io.read() ~= "}" do
+    --move the file position to the next line
+    io.read("*l")
+    
+    --increment line counter
+    line_number = line_number + 1
+    
+    --read each line until "}" is found
+    while io.read() ~= "}" do
         
       --store the current line and move file position down 1 line
       local building_string = io.read("*l")
@@ -148,7 +148,7 @@ function user_data.load(file_name)
         end
       
       end
-	  
+    
     end
     
   end

@@ -1,19 +1,20 @@
 
 local MC_sprite_options = require "MC_sprite_options"
 local math = require "math"
+local user_data = require "user_data"
 
 local murder_children = {}
 local mc_table = { __index = murder_children }
 
 
-function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_move_func, sprite_obj)
+function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_move_func, sprite_obj, frames)
 
 	local new_child = {}
 	mc_type = n_type
 	HP = n_health
 	soul_reward = n_soul_reward
 	cps_eaten = n_cps_eaten
-	new_child.image = display.newImage(sprite_obj)
+	new_child.image = display.newImage(sprite_obj, 1)
 	
 	local spawnX = 0
 	local spawnY = 0
@@ -36,6 +37,7 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 	new_child.image.x = spawnX
 	new_child.image.y = spawnY
 	
+	
 	--cookie boundary
 	local cookie_coordX_RNG = math.random(display.contentHeight*0.25, display.contentHeight*0.5)
 	local cookie_coordY_RNG = math.random(display.contentWidth*0.40, display.contentWidth*0.75)
@@ -48,7 +50,7 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 		{
 			x = cookie_coordX_RNG,
 			y = cookie_coordY_RNG,
-			time = 3000,
+			time = math.random(3000, 5000),
 			transition = easing.linear,
 		}
 		
@@ -62,13 +64,15 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 			HP = HP - 1
 			print("tapped!")
 		end	
+		if(HP <= 0) then
+			print("murdered!")
+			display.remove( new_child.image )
+			user_data.souls = user_data.souls + soul_reward
+			print(user_data.souls)
+		end	
 	end
 	new_child.image:addEventListener( "touch", mc_touch)
 
-	if(HP <= 0) then
-		display.remove( sprite_obj )
-	end	
-	
 	
 	return setmetatable (new_child, mc_table)
 	
@@ -76,18 +80,3 @@ end
 
 return murder_children
 	
-	
---[[
---called when the child is murdered
-function murder_children:remove(m_c_table)
-  
-  --remove them from the screen
-  display.remove(self.sprite)
-  
-  --remove references to thier table
-  m_c_table = nil
-  self = nil
-  
-end
-
-]]--
