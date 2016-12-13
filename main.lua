@@ -1,7 +1,7 @@
-
 local composer = require "composer" 
 local widget = require "widget"
 local lfs = require "lfs"
+
 local native = require "native"
 
 local scene = composer.newScene() 
@@ -10,37 +10,33 @@ local user_data = require "user_data"
 
 local load_file = user_data.load
 
---[[temporary error prevention for testing
+--[[
+--temporary error prevention for testing
 user_data.cookies = 0
 user_data.cookie_tap = 10
 user_data.cps = 0
-user_data[4] = 0
-
+user_data.souls = 0
 -- this function handles the event for when and/or if the button is pressed
 local function handleCookieBtn(event)
-
   if event.phase == "ended" then -- this event.phase == "ended" means that the button was tapped, then the users finger left the button
-
     print("cookieBtn was pressed!") 
-
     display.remove(cookieBtn) 
     composer.gotoScene( "user_cookie" ) 
-
   end
-
 end
-
-
 local options = {
   left = 80, 
   top = 100, 
   label = "Visit Your Cookie!", 
   onEvent = handleCookieBtn 
 }
+cookieBtn = widget.newButton(options) -- this will display the button with the parameters 'options'
+
 
 
 cookieBtn = widget.newButton(options) -- this will display the button with the parameters 'options'
 ]]--
+
 
 local function new_game()
   
@@ -71,15 +67,18 @@ local function new_game()
   
   name_prompt_text = display.newText(text_options)
   
-  name_prompt_input = native.newTextField(display.contentCenterX, display.contentCenterY, 48, 10)
+end
+
+local function new_game_temp()
   
   load_file("new_game")
   
-  user_data.save(name)
+  user_data.save("Temp Save")
   
   composer.gotoScene("user_cookie")
   
 end
+
 
 local function make_file_buttons() 
   
@@ -137,3 +136,4 @@ local ng_button_options = {
 }
 
 ng_button = widget.newButton(ng_button_options)
+

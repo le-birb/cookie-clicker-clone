@@ -2,11 +2,16 @@
 
 local composer = require "composer"
 local widget = require "widget"
+local atlas = require "atlas"
 
 local user_data = require "user_data"
 local spoopy = require "spoopy"
 local murder_children = require "murder_children"
 local scene = composer.newScene() 
+
+mcList = {}
+local has_MCs = false
+local paused = false
 
 local cookie_count_text
 
@@ -114,11 +119,28 @@ function scene:create(event)
   print("doing thing")
   
   spoopy_spawn()
-  --m_c_functions.spawn("basic")
   
-  print("did thing")
+  local function spawnMC()
+  
+  --max. is 10 on-screen; if the count exceeds that amount stop spawning, else spawn one
+	if(murder_children.mc_count < 10) then  
+	
+		mcList[#mcList+1] = murder_children.new("basic", 3, 1, 0, easing.linear, 
+		atlas.basic_mc_sheet, atlas.sequences_basicMC)
+		murder_children.mc_count = murder_children.mc_count + 1 
+		
+	end
+  
+  end
+  
+  spawn_timer = timer.performWithDelay(5000, spawnMC, 0)
 
-end
+end 	
+	
+
+
+
+
 
 function scene:show(event)
   
