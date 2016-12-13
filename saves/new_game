@@ -1,6 +1,7 @@
 cookies 0
 tap_strength 1
 souls 0
+cps 0
 
 buildings {
 Farm owned 0 cps 0.5 base_cost 40

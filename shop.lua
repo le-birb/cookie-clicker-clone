@@ -20,7 +20,7 @@ end
 
 function scene:create(event)
 
-  local sceneGroup = self.view
+  local scene_group = self.view
 
   local intro = display.newText("Cookie Shop", display.contentWidth * 0.5, display.contentHeight * 0.1, native.systemFontBold, 30)
   local returnOptions = {
@@ -35,19 +35,19 @@ function scene:create(event)
   local returnToCookie = widget.newButton(returnOptions)
 
 
-  sceneGroup:insert(intro)
-  sceneGroup:insert(returnToCookie)
+  scene_group:insert(intro)
+  scene_group:insert(returnToCookie)
 end
 
 function scene:show(event)
 
-  local sceneGroup = self.view
+  local scene_group = self.view
 
 end
 
 function scene:hide(event)
 
-  local sceneGroup = self.view
+  local scene_group = self.view
 
 
 

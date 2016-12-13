@@ -1,5 +1,4 @@
 
-
 local composer = require "composer"
 local widget = require "widget"
 local atlas = require "atlas"
@@ -44,7 +43,7 @@ end
 
 function scene:create(event)
 
-  local sceneGroup = self.view
+  local scene_group = self.view
   
     local spriteOptions =
   {  
@@ -111,10 +110,10 @@ function scene:create(event)
     fillColor = { default = {24/255,55/255,0/255,1}, over = {66/255,0/255,23/255,1} },
   }]]--
   
-  sceneGroup:insert(shopButton)
-  --sceneGroup:insert(saveButton)
-  sceneGroup:insert(cookie)
-  sceneGroup:insert(cookie_count_text)
+  scene_group:insert(shopButton)
+  --scene_group:insert(saveButton)
+  scene_group:insert(cookie)
+  scene_group:insert(cookie_count_text)
   
   print("doing thing")
   
@@ -135,16 +134,11 @@ function scene:create(event)
   
   spawn_timer = timer.performWithDelay(5000, spawnMC, 0)
 
-end 	
-	
-
-
-
-
+end
 
 function scene:show(event)
   
-  local sceneGroup = self.view 
+  local scene_group = self.view 
   local phase = event.phase 
   
   if phase == "will" then -- Called when the scene is still off screen and is about to move on screen
@@ -156,7 +150,7 @@ function scene:show(event)
 end
 
 function scene:hide( event )
-  local sceneGroup = self.view 
+  local scene_group = self.view 
   local phase = event.phase
   
   if phase == "will" then -- Called when the scene is on screen and is about to move off screen
