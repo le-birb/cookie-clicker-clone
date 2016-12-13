@@ -1,14 +1,18 @@
 local math = require "math"
+local atlas = require "atlas"
 local murder_children = require "murder_children"
+local user_data = require "user_data"
 --local user_cookie = require "user_cookie"
 
-local has_MCs = false
+local spoopy = {}
 
 local playerHasSpoopy = false
 
-local spoopy_functions = {}
+spoopy.x = 0
+spoopy.y = 0
 
-function spoopy_spawn()
+
+function spoopy.spoopy_spawn()
 
 
   --[[local spoopy_stats = 
@@ -41,9 +45,9 @@ function spoopy_spawn()
     
   
   local spoopySprite = display.newImage( spoopySheet, 1)
+
   spoopySprite.y = display.contentCenterY * 0.5
   spoopySprite.x = display.contentCenterX * 0.5
-  
   
   local function move_spoopy( event )
   
@@ -63,15 +67,28 @@ function spoopy_spawn()
       --i ate the cookies
     }
   
-    --spoopySprite.x =  spoopySprite.x + math.cos(t)--spoopySprite.x + 5
+    spoopySprite.x =  spoopySprite.x + math.cos(t)--spoopySprite.x + 5
     spoopySprite.y =  spoopySprite.y + math.sin(t)
+	
+	spoopy.x = spoopySprite.x
+	spoopy.y = spoopySprite.y
+	
 
     transition.moveTo( spoopySprite,  move_params)
   end
   
   Runtime:addEventListener( "enterFrame", move_spoopy)
   
+  local function spoopy_collision( obj )
+	
+	if(murder_children.HP > 0) then
+		murder_children.HP = murder_children.HP - 1
+		print(murder_children.HP)
+	end
+  end
+  
+  local attack_timer = timer.performWithDelay(1000, spoopy_collision, 0)
 
 end
 
-return spoopy_spawn()
+return spoopy

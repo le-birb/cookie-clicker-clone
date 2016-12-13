@@ -2,6 +2,26 @@
 
 local atlas = {}
 
+local spoopy_options =
+  {
+    frames =
+    {
+      { -- frame 1
+        x = 0,
+        y = 0,
+        width = 20,
+        height = 26
+      }--[[,
+      { -- frame 2
+        x = 16,
+        y = 0,
+        width = 16,
+        height = 26  
+      } ]]--
+    }
+  
+  }
+
 --frame settings for each type of MC
 local basic_mc_options =
 	{
@@ -36,6 +56,7 @@ local fat_mc_options = {}
 
 --set the sprite settings to the options above
   atlas.basic_mc_sheet  = graphics.newImageSheet("resources/mc_animation.png", basic_mc_options)
+  atlas.spoopySheet     = graphics.newImageSheet("resources/spoopyer.png", spoopy_options)
  local super_mc_sheet  = nil
  local sneaky_mc_sheet = nil
  local fat_mc_sheet    = nil
