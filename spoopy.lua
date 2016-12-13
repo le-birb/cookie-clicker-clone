@@ -21,7 +21,31 @@ function spoopy.spoopy_spawn()
     "movement" = 1 --TODO
   }]]--
   
-  local spoopySprite = display.newImage( atlas.spoopySheet, 1)
+  local spoopy_options =
+  {
+    frames =
+    {
+      { -- frame 1
+        x = 0,
+        y = 0,
+        width = 20,
+        height = 26
+      }--[[,
+      { -- frame 2
+        x = 16,
+        y = 0,
+        width = 16,
+        height = 26  
+      } ]]--
+    }
+  
+  }
+  
+  local spoopySheet = graphics.newImageSheet("resources/spoopyer.png", spoopy_options)
+    
+  
+  local spoopySprite = display.newImage( spoopySheet, 1)
+
   spoopySprite.y = display.contentCenterY * 0.5
   spoopySprite.x = display.contentCenterX * 0.5
   
@@ -33,12 +57,13 @@ function spoopy.spoopy_spawn()
     
     local move_params =
     {
-		x = murder_children.x,
-	    y = murder_children.y,
-		delay = 100,
-		time = 1000,
-		transition = easing.linear,
-		onComplete = attack_timer,
+		--x = mcList[1].x,
+		--y = mcList[1].y,
+      x = randoNumX,
+      y = randoNumY,
+      delay = math.random(1000, 10000),
+      time = math.random(3000, 5000),
+      transition = easing.inOutQuad
       --i ate the cookies
     }
   

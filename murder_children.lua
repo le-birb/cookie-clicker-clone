@@ -1,4 +1,6 @@
 
+local murder_children = {type = "", health = 0, soul_reward = 1, cps_eaten = 0}
+
 local atlas = require "atlas"
 local math = require "math"
 local user_data = require "user_data"
@@ -14,7 +16,6 @@ murder_children.sprite = nil
 murder_children.soul_reward = 0
 
 has_spoopy = false
-
 
 function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_move_func, sprite_obj, frames)
 
@@ -97,4 +98,3 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 end
 
 return murder_children
-	

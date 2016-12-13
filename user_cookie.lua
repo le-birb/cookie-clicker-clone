@@ -117,9 +117,9 @@ function scene:create(event)
   sceneGroup:insert(cookie_count_text)
   
   print("doing thing")
-  
+
   spoopy.spoopy_spawn()
-  
+
   local function spawnMC()
   
   --max. is 10 on-screen; if the count exceeds that amount stop spawning, else spawn one
