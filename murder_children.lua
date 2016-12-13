@@ -1,10 +1,12 @@
 
-local MC_sprite_options = require "MC_sprite_options"
+local atlas = require "atlas"
 local math = require "math"
 local user_data = require "user_data"
 
 local murder_children = {}
 local mc_table = { __index = murder_children }
+
+murder_children.mc_count = 0
 
 
 function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_move_func, sprite_obj, frames)
@@ -14,7 +16,9 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 	HP = n_health
 	soul_reward = n_soul_reward
 	cps_eaten = n_cps_eaten
-	new_child.image = display.newImage(sprite_obj, 1)
+	move_func = n_move_func
+	new_child.image = display.newSprite(sprite_obj, frames)
+	new_child.image:play()
 	
 	local spawnX = 0
 	local spawnY = 0
@@ -51,7 +55,7 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 			x = cookie_coordX_RNG,
 			y = cookie_coordY_RNG,
 			time = math.random(3000, 5000),
-			transition = easing.linear,
+			transition = move_func,
 		}
 		
 		transition.moveTo(new_child.image, move_params)
@@ -68,7 +72,7 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 			print("murdered!")
 			display.remove( new_child.image )
 			user_data.souls = user_data.souls + soul_reward
-			print(user_data.souls)
+			murder_children.mc_count = murder_children.mc_count - 1 
 		end	
 	end
 	new_child.image:addEventListener( "touch", mc_touch)

@@ -2,7 +2,7 @@
 
 local composer = require "composer"
 local widget = require "widget"
-local MC_sprite_options = require "MC_sprite_options"
+local atlas = require "atlas"
 
 local user_data = require "user_data"
 local spoopy = require "spoopy"
@@ -10,8 +10,8 @@ local murder_children = require "murder_children"
 local scene = composer.newScene() 
 
 mcList = {}
-local mc_count = 0
 local has_MCs = false
+local paused = false
 
 local cookie_count_text
 
@@ -119,31 +119,28 @@ function scene:create(event)
   print("doing thing")
   
   spoopy_spawn()
-  --MC_spawn()
-  --print(MC_sprite_options.basic_MC)
-  --local MC1 = murder_children:new("basic", 3, 1, 0, nil, MC_sprite_options.basic_MC)
-  --MC1:spawn()
-  --m_c_functions.spawn("basic")
   
   local function spawnMC()
-	mcList[#mcList+1] = murder_children.new("basic", 3, 1, 0, nil, 
-	MC_sprite_options.basic_mc_sheet, MC_sprite_options, MC_sprite_options.sequences_basicMC)
-	mc_count = mc_count + 1
-	has_MCs = true
+  
+  --max. is 10 on-screen; if the count exceeds that amount stop spawning, else spawn one
+	if(murder_children.mc_count < 10) then  
+	
+		mcList[#mcList+1] = murder_children.new("basic", 3, 1, 0, easing.linear, 
+		atlas.basic_mc_sheet, atlas.sequences_basicMC)
+		murder_children.mc_count = murder_children.mc_count + 1 
+		
+	end
+  
   end
-  timer.performWithDelay(3000, spawnMC, 0)
   
-  while has_MCs do
-	  local function eat()
-	  print("eaten!")
-		user_data.cookies = user_data.cookies - 1
-	  end 
-	  timer.performWithDelay(3000, eat, 0)  
-  end 	  
-  
-  print("did thing")
+  spawn_timer = timer.performWithDelay(5000, spawnMC, 0)
 
-end
+end 	
+	
+
+
+
+
 
 function scene:show(event)
   
