@@ -131,7 +131,7 @@ local ng_button_options = {
   height = display.contentHeight *.1,
   left = display.contentWidth * .15,
   top = display.contentHeight * .9,
-  onEvent = new_game,
+  onEvent = new_game_temp,
   fillColor = { default = {24/255,55/255,0/255,1} },
 }
 
