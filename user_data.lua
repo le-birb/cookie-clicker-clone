@@ -9,6 +9,13 @@ user_data.souls = nil --how many souls the user has collected
 user_data.cps = nil --cps
 user_data.buildings = {} --stores building dataa
 
+function user_data.cps_tick()
+  
+  --this functino is called each frame, with 30 per second
+  user_data.cookies += user_data.cps / 30
+  
+end
+
 function user_data.save(file_name) 
   
   --open the target file in write mode
@@ -33,9 +40,8 @@ function user_data.save(file_name)
   for key, element in pairs(buildings) do
     
     --print the building name
-    io.write(key.." ")
-  io.write()
-    
+    io.write(key.." \n")
+
     --iterate through building parameters
     for parameter, value in pairs(element) do
       
@@ -56,7 +62,11 @@ function user_data.load(file_name)
   local file_path = system.pathForFile("saves/"..file_name)
   
   --open target file in read mode
+<<<<<<< HEAD
   local file = io.open(file_path, "r")
+=======
+  local file = io.open("saves/"..file_name, "r")
+>>>>>>> 49660184ee4bafb5c8d3f283e8d9c288b1cd2f38
   
   --set target file as the default input file
   io.input(file)
@@ -81,14 +91,14 @@ function user_data.load(file_name)
       user_data.cookies =  tonumber(string.sub(line, string.find(line, "%d+")))
       
       print("cookies : "..user_data.cookies)
-      
+
     --if the line begins with tap_strength
     elseif string.find(line, "^tap_strength".."%s+") then
       
       --throw an error if there is no number
       assert(string.find(line, "^tap_strength".."%s+".."%d+"), "ERROR: number expected after tap_strength")
       
-    --load tap_strength
+      --load tap_strength
       user_data.cookie_tap = tonumber(string.sub(line, string.find(line, "%d+")))
     
     --if the line begins with souls
@@ -103,10 +113,8 @@ function user_data.load(file_name)
   --if the line begins with buildings
     elseif string.find(line, "^buildings".."%s") then
     
-    
-    
     --throw an error if '{' is missing
-    assert(string.find(line, "^buildings".."%s".."\{"), "ERROR: \'{\' expected after buildings")
+    assert(string.find(line, "^buildings".."%S".."\{"), "ERROR: \'{\' expected after buildings")
       
     --move the file position to the next line
     io.read("*l")
@@ -121,8 +129,8 @@ function user_data.load(file_name)
       local building_string = io.read("*l")
       
       --increment line counter
-      line_number = line_number + 1
-      
+      line_number = line_number + 1 
+
         --check if the line has correct syntax
         if building_string == "%a owned %d+ cps %d+ base_price %d+" then
           
@@ -163,6 +171,9 @@ function user_data.load(file_name)
   assert(user_data.cookies, "ERROR: did not find a value for cookies" )
   
   assert(user_data.cookie_tap, "ERROR: did not find a value for tap_strength")
+  
+  --begin a process which adds cookies based on cps each frame, indefinitely
+  timer.performWithDelay(16.66667, user_data.cps_tick(), -1)
   
 end
 

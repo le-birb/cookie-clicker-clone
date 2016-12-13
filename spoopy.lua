@@ -1,4 +1,8 @@
 local math = require "math"
+local murder_children = require "murder_children"
+--local user_cookie = require "user_cookie"
+
+local has_MCs = false
 
 local playerHasSpoopy = false
 
@@ -20,7 +24,7 @@ function spoopy_spawn()
       { -- frame 1
         x = 0,
         y = 0,
-        width = 16,
+        width = 20,
         height = 26
       }--[[,
       { -- frame 2
@@ -49,6 +53,8 @@ function spoopy_spawn()
     
     local move_params =
     {
+		--x = mcList[1].x,
+		--y = mcList[1].y,
       x = randoNumX,
       y = randoNumY,
       delay = math.random(1000, 10000),
