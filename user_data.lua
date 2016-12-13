@@ -9,6 +9,13 @@ user_data.souls = nil --how many souls the user has collected
 user_data.cps = nil --cps
 user_data.buildings = {} --stores building dataa
 
+function user_data.cps_tick()
+  
+  --this functino is called each frame, with 30 per second
+  user_data.cookies += user_data.cps / 30
+  
+end
+
 function user_data.save(file_name) 
   
   --open the target file in write mode
@@ -34,7 +41,7 @@ function user_data.save(file_name)
     
     --print the building name
     io.write(key.." ")
-  io.write()
+    io.write()
     
     --iterate through building parameters
     for parameter, value in pairs(element) do
@@ -163,6 +170,9 @@ function user_data.load(file_name)
   assert(user_data.cookies, "ERROR: did not find a value for cookies" )
   
   assert(user_data.cookie_tap, "ERROR: did not find a value for tap_strength")
+  
+  --begin a process which adds cookies based on cps each frame, indefinitely
+  timer.performWithDelay(16.66667, user_data.cps_tick(), -1)
   
 end
 

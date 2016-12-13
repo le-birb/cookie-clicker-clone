@@ -2,6 +2,7 @@
 local composer = require "composer" 
 local widget = require "widget"
 local lfs = require "lfs"
+local native = require "native"
 
 local scene = composer.newScene() 
 
@@ -43,7 +44,34 @@ cookieBtn = widget.newButton(options) -- this will display the button with the p
 
 local function new_game()
   
+  name_prompt = display.newImageRect("box.png", "resources", 56, 32)
   
+  name_prompt.x = dislay.contentCenterX
+  name_prompt.y = display.contentCenterY
+  
+  local text_options = {
+    text = "What would you like to name your file?",
+    x = display.contentCenterX,
+    y = display.contentCenterY + 10,
+    width = 48,
+    height = 0,
+    font = native.systemFont,
+  }
+  
+  local button_options = {
+    label = "Enter",
+    x = display.contentCenterX,
+    y = display.contentCenterY - 20,
+    width = 48,
+    height = 24,
+    onEvent = function() 
+      
+    end
+  }
+  
+  name_prompt_text = display.newText(text_options)
+  
+  name_prompt_input = native.newTextField(display.contentCenterX, display.contentCenterY, 48, 10)
   
   load_file("new_game")
   
@@ -92,7 +120,6 @@ local function make_file_buttons()
   file_viewer:insert(file_button)
   
   end
-  
   
 end
 
