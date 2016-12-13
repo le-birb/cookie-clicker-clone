@@ -116,9 +116,9 @@ function scene:create(event)
   scene_group:insert(cookie_count_text)
   
   print("doing thing")
-  
-  spoopy_spawn()
-  
+
+  spoopy.spoopy_spawn()
+
   local function spawnMC()
   
   --max. is 10 on-screen; if the count exceeds that amount stop spawning, else spawn one
@@ -129,6 +129,7 @@ function scene:create(event)
 		murder_children.mc_count = murder_children.mc_count + 1 
 		
 	end
+	
   
   end
   
