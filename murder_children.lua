@@ -7,14 +7,21 @@ local murder_children = {}
 local mc_table = { __index = murder_children }
 
 murder_children.mc_count = 0
+murder_children.x = 0
+murder_children.y = 0
+murder_children.HP = 0
+murder_children.sprite = nil
+murder_children.soul_reward = 0
+
+has_spoopy = false
 
 
 function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_move_func, sprite_obj, frames)
 
 	local new_child = {}
 	mc_type = n_type
-	HP = n_health
-	soul_reward = n_soul_reward
+	murder_children.HP = n_health
+	murder_children.soul_reward = n_soul_reward
 	cps_eaten = n_cps_eaten
 	move_func = n_move_func
 	new_child.image = display.newSprite(sprite_obj, frames)
@@ -41,6 +48,8 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 	new_child.image.x = spawnX
 	new_child.image.y = spawnY
 	
+	murder_children.sprite = new_child.image
+	
 	
 	--cookie boundary
 	local cookie_coordX_RNG = math.random(display.contentHeight*0.25, display.contentHeight*0.5)
@@ -59,20 +68,25 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 		}
 		
 		transition.moveTo(new_child.image, move_params)
+		
+		murder_children.x = new_child.image.x
+		murder_children.y = new_child.image.y
 	end
 	
 	Runtime:addEventListener( "enterFrame", move_MC)
 	
 	local function mc_touch( event )
-		if( event.phase == "ended" and HP > 0) then	
-			HP = HP - 1
+		if( event.phase == "ended" and murder_children.HP > 0) then	
+			murder_children.HP = murder_children.HP - 1
 			print("tapped!")
 		end	
-		if(HP <= 0) then
+		if(murder_children.HP <= 0) then
 			print("murdered!")
+			transition.fadeOut( new_child.image, {time = 1000})
 			display.remove( new_child.image )
-			user_data.souls = user_data.souls + soul_reward
+			user_data.souls = user_data.souls + murder_children.soul_reward
 			murder_children.mc_count = murder_children.mc_count - 1 
+
 		end	
 	end
 	new_child.image:addEventListener( "touch", mc_touch)

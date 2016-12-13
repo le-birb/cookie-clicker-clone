@@ -118,7 +118,7 @@ function scene:create(event)
   
   print("doing thing")
   
-  spoopy_spawn()
+  spoopy.spoopy_spawn()
   
   local function spawnMC()
   
@@ -130,6 +130,7 @@ function scene:create(event)
 		murder_children.mc_count = murder_children.mc_count + 1 
 		
 	end
+	
   
   end
   
