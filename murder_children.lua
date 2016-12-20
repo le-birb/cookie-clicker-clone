@@ -66,6 +66,7 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 			y = cookie_coordY_RNG,
 			time = math.random(3000, 5000),
 			transition = move_func,
+      onComplete = function() user_data.cps = user_data.cps - cps_eaten end
 		}
 		
 		transition.moveTo(new_child.image, move_params)
@@ -83,6 +84,7 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 		end	
 		if(murder_children.HP <= 0) then
 			print("murdered!")
+      user_data.cps = user_data.cps + cps_eaten
 			transition.fadeOut( new_child.image, {time = 1000})
 			display.remove( new_child.image )
 			user_data.souls = user_data.souls + murder_children.soul_reward

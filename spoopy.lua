@@ -79,14 +79,6 @@ function spoopy.spoopy_spawn()
   
   Runtime:addEventListener( "enterFrame", move_spoopy)
   
-  local function spoopy_collision( obj )
-	
-	if(murder_children.HP > 0) then
-		murder_children.HP = murder_children.HP - 1
-		print(murder_children.HP)
-	end
-  end
-  
   local attack_timer = timer.performWithDelay(1000, spoopy_collision, 0)
 
 end
