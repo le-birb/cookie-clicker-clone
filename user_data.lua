@@ -128,7 +128,7 @@ function user_data.load(file_name)
       line_number = line_number + 1
       
       --read each line until "}" is found
-      while not string.find(io.read(), "}.*") do
+      while not string.find(io.read(), "}") do
         
         print(io.read())
         
