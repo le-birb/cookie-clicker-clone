@@ -2,15 +2,12 @@ local composer = require "composer"
 local widget = require "widget"
 local lfs = require "lfs"
 
-local native = require "native"
-
 local scene = composer.newScene() 
 
 local user_data = require "user_data"
 
 local load_file = user_data.load
 
---[[
 --temporary error prevention for testing
 user_data.cookies = 0
 user_data.cookie_tap = 10
@@ -33,53 +30,29 @@ local options = {
 cookieBtn = widget.newButton(options) -- this will display the button with the parameters 'options'
 
 
+function scene:create(event)
 
-cookieBtn = widget.newButton(options) -- this will display the button with the parameters 'options'
-]]--
-
-
-local function new_game()
+  local sceneGroup = self.view
   
-  name_prompt = display.newImageRect("box.png", "resources", 56, 32)
+  make_file_buttons()
   
-  name_prompt.x = dislay.contentCenterX
-  name_prompt.y = display.contentCenterY
-  
-  local text_options = {
-    text = "What would you like to name your file?",
-    x = display.contentCenterX,
-    y = display.contentCenterY + 10,
-    width = 48,
-    height = 0,
-    font = native.systemFont,
+  --new game button
+  ng_button_options {
+    label = "New Game",
+    width = display.contentWidth * .8,
+    height = display.contentHeight *.1,
+    left = display.contentWidth * .15,
+    top = display.contentHeight * .9,
+    onEvent = new_game,
   }
   
-  local button_options = {
-    label = "Enter",
-    x = display.contentCenterX,
-    y = display.contentCenterY - 20,
-    width = 48,
-    height = 24,
-    onEvent = function() 
-      
-    end
-  }
+  ng_button = widget.newButton(ng_button_options)
   
-  name_prompt_text = display.newText(text_options)
+  sceneGroup:insert(ng_button)
   
 end
 
-local function new_game_temp()
-  
-  load_file("new_game")
-  
-  user_data.save("Temp Save")
-  
-  composer.gotoScene("user_cookie")
-  
-end
-
-
+--[[
 local function make_file_buttons() 
   
   --first create a scroll content container in which to store the buttons
@@ -88,16 +61,17 @@ local function make_file_buttons()
     left = display.contentWidth * .1,
     top = display.contentHeight * .1,
     width = display.contentWidth * .8,
-    height = display.contentHeight * .75,
+    height = display.contentheight * .75,
     horizontalScrollDisabled = true,
     --visuals and stuff are yet to be added and will go here
-    --that would be background visuals
+  --that would be background visuals
   }
   
   local file_viewer = widget.newScrollView(file_viewer_options)
   
   --this creates an iterator which iterates through each file in a directory
   for file in lfs.dir("saves/") do
+    
     
     if file ~= "new_game" then  
       --create a button for each file in the directory
@@ -108,32 +82,31 @@ local function make_file_buttons()
         --when the button is pressed, load the corresponding file and begin the game
         onEvent = function ()
           load_file(file)
-          composer.gotoScene("user_cookie")
+          composer.gotoScene("user_cookie.lua")
         end,
-        fillColor = { default = {24/255,55/255,0/255,1} }
       }
     end
     
-  local file_button = widget.newButton(file_button_options)
+  file_button = widget.newButton(file_button_options)
   
   file_viewer:insert(file_button)
   
-  end
+  sceneGroup:insert(file_viewer)
   
+  end
+
 end
 
-make_file_buttons()
+local function new_game(name)
+  
+  load_save("new_game")
+  
+  user_data.save(name)
+  
+  composer.gotoScene("user_cookie")
+  
+end
+]]--
+scene:addEventListener( "create", scene )
 
---new game button
-local ng_button_options = {
-  label = "New Game",
-  width = display.contentWidth * .8,
-  height = display.contentHeight *.1,
-  left = display.contentWidth * .15,
-  top = display.contentHeight * .9,
-  onEvent = new_game_temp,
-  fillColor = { default = {24/255,55/255,0/255,1} },
-}
-
-ng_button = widget.newButton(ng_button_options)
-
+return scene

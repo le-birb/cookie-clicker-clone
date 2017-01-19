@@ -21,31 +21,7 @@ function spoopy.spoopy_spawn()
     "movement" = 1 --TODO
   }]]--
   
-  local spoopy_options =
-  {
-    frames =
-    {
-      { -- frame 1
-        x = 0,
-        y = 0,
-        width = 20,
-        height = 26
-      }--[[,
-      { -- frame 2
-        x = 16,
-        y = 0,
-        width = 16,
-        height = 26  
-      } ]]--
-    }
-  
-  }
-  
-  local spoopySheet = graphics.newImageSheet("resources/spoopyer.png", spoopy_options)
-    
-  
-  local spoopySprite = display.newImage( spoopySheet, 1)
-
+  local spoopySprite = display.newImage( atlas.spoopySheet, 1)
   spoopySprite.y = display.contentCenterY * 0.5
   spoopySprite.x = display.contentCenterX * 0.5
   
@@ -57,37 +33,64 @@ function spoopy.spoopy_spawn()
     
     local move_params =
     {
-		--x = mcList[1].x,
-		--y = mcList[1].y,
-      x = randoNumX,
-      y = randoNumY,
-      delay = math.random(1000, 10000),
-      time = math.random(3000, 5000),
-      transition = easing.inOutQuad
-      --i ate the cookies
+      x = murder_children.x,
+      y = murder_children.y,
+      delay = 100,
+      time = 1000,
+      transition = easing.linear,
+      --onComplete = attack_timer,
+        --i ate the cookies
     }
   
     spoopySprite.x =  spoopySprite.x + math.cos(t)--spoopySprite.x + 5
     spoopySprite.y =  spoopySprite.y + math.sin(t)
 	
-	spoopy.x = spoopySprite.x
-	spoopy.y = spoopySprite.y
-	
-
+    spoopy.x = spoopySprite.x
+    spoopy.y = spoopySprite.y
+    
     transition.moveTo( spoopySprite,  move_params)
   end
   
   Runtime:addEventListener( "enterFrame", move_spoopy)
   
-  local function spoopy_collision( obj )
-	
-	if(murder_children.HP > 0) then
+  local function hasCollided()
+    
+    if spoopySprite == nil then 
+      return false
+    end
+
+    local dx = spoopySprite.x - murder_children.x
+    local dy = spoopySprite.y - murder_children.y
+      
+    local distance = math.sqrt( dx*dx + dy*dy )
+		local objectSize = murder_children.x/2 + spoopySprite.x/2 
+      
+    if distance < objectSize then	
+      return true
+		end
+    return false
+    
+  end
+    
+  local function kill()
+  
+	if hasCollided() == true and murder_children.HP > 0 then
 		murder_children.HP = murder_children.HP - 1
 		print(murder_children.HP)
+		--murder_children.isDead = false
 	end
+	if murder_children.HP <=0 then
+		murder_children.kill(murder_children.sprite)
+		murder_children.sprite = nil
+		murder_children.isDead = true
+	end
+		
   end
   
-  local attack_timer = timer.performWithDelay(1000, spoopy_collision, 0)
+  kill_timer = timer.performWithDelay(2000, kill, 0)
+
+	
+  
 
 end
 

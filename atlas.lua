@@ -55,7 +55,7 @@ local fat_mc_options = {}
 }
 
 --set the sprite settings to the options above
-  atlas.basic_mc_sheet  = graphics.newImageSheet("resources/mc_animation.png", basic_mc_options)
+  atlas.basic_mc_sheet  = graphics.newImageSheet("resources/basic_MC.png", basic_mc_options)
   atlas.spoopySheet     = graphics.newImageSheet("resources/spoopyer.png", spoopy_options)
  local super_mc_sheet  = nil
  local sneaky_mc_sheet = nil
