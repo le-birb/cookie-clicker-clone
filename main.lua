@@ -1,4 +1,8 @@
---local composer = require "composer"
+
+local composer = require "composer" 
+local widget = require "widget"
+local lfs = require "lfs"
+
 
 --composer.gotoScene("main_menu")
 
@@ -6,7 +10,6 @@
 local composer = require "composer"
 local widget = require "widget" 
 local user_data = require "user_data"
-
 
 local function handleCookieBtn(event)
 
@@ -28,6 +31,5 @@ local options = {
   label = "New Game", 
   onEvent = handleCookieBtn 
 }
-
 
 cookieBtn = widget.newButton(options)

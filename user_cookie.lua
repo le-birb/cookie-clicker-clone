@@ -13,6 +13,7 @@ local has_MCs = false
 local paused = false
 
 local cookie_count_text
+user_data.cookies = 1000
 
 local function cookieTapped(event)
 
@@ -65,6 +66,23 @@ function scene:create(event)
     }
     
   }
+   
+  
+    local function spawnMC()
+  
+  --max. is 10 on-screen; if the count exceeds that amount stop spawning, else spawn one
+	if(murder_children.mc_count < 10) then  
+	
+		mcList[#mcList+1] = murder_children.new("basic", 3, 1, 1000, easing.linear, 
+		atlas.basic_mc_sheet, atlas.sequences_basicMC)
+		murder_children.mc_count = murder_children.mc_count + 1 
+		
+	end
+  
+end
+  
+  spawn_timer = timer.performWithDelay(5000, spawnMC, 0)
+  
   
   local cookieSheet = graphics.newImageSheet( "resources/PHCookie.png.png", spriteOptions)
   
@@ -116,10 +134,6 @@ function scene:create(event)
   scene_group:insert(cookie_count_text)
   
   print("doing thing")
-
-  spoopy.spoopy_spawn()
-
-  local function spawnMC()
   
   --max. is 10 on-screen; if the count exceeds that amount stop spawning, else spawn one
 	if(murder_children.mc_count < 10) then  
@@ -133,7 +147,7 @@ function scene:create(event)
   
   end
   
-  spawn_timer = timer.performWithDelay(5000, spawnMC, 0)
+
 
 end
 
