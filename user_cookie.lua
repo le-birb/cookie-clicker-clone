@@ -1,5 +1,4 @@
 
-
 local composer = require "composer"
 local widget = require "widget"
 local atlas = require "atlas"
@@ -45,7 +44,7 @@ end
 
 function scene:create(event)
 
-  local sceneGroup = self.view
+  local scene_group = self.view
   
     local spriteOptions =
   {  
@@ -99,7 +98,7 @@ end
   
   local cookie = widget.newButton(cookieSheetOptions)                                    
 
-  local shOPtions = {
+  --[[local shOPtions = {
     label = "shop",
     onEvent = moveToShop,
     shape = "rectangle",
@@ -109,7 +108,7 @@ end
     fillColor = { default = {24/255,55/255,0/255,1}, over = {66/255,0/255,23/255,1} },                  
   }
   
-  local shopButton = widget.newButton(shOPtions)
+  local shopButton = widget.newButton(shOPtions)]]--
   
   local cookie_count_text_options = {
     x = display.contentWidth * 0.5,
@@ -129,27 +128,32 @@ end
     fillColor = { default = {24/255,55/255,0/255,1}, over = {66/255,0/255,23/255,1} },
   }]]--
   
-  sceneGroup:insert(shopButton)
-  --sceneGroup:insert(saveButton)
-  sceneGroup:insert(cookie)
-  sceneGroup:insert(cookie_count_text)
+  --scene_group:insert(shopButton)
+  --scene_group:insert(saveButton)
+  scene_group:insert(cookie)
+  scene_group:insert(cookie_count_text)
   
   print("doing thing")
   
-  spoopy.spoopy_spawn()
+  --max. is 10 on-screen; if the count exceeds that amount stop spawning, else spawn one
+	if(murder_children.mc_count < 10) then  
+	
+		mcList[#mcList+1] = murder_children.new("basic", 3, 1, .34, easing.linear, 
+		atlas.basic_mc_sheet, atlas.sequences_basicMC)
+		murder_children.mc_count = murder_children.mc_count + 1 
+		
+	end
+	
+  
+  end
   
 
 
-end 	
-	
-
-
-
-
+end
 
 function scene:show(event)
   
-  local sceneGroup = self.view 
+  local scene_group = self.view 
   local phase = event.phase 
   
   if phase == "will" then -- Called when the scene is still off screen and is about to move on screen
@@ -161,7 +165,7 @@ function scene:show(event)
 end
 
 function scene:hide( event )
-  local sceneGroup = self.view 
+  local scene_group = self.view 
   local phase = event.phase
   
   if phase == "will" then -- Called when the scene is on screen and is about to move off screen
@@ -171,8 +175,11 @@ function scene:hide( event )
   end
 end
 
+--timer.performWithDelay(.01, user_data.cps_tick, -1)
+
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 
 return scene
+

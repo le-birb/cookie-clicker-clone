@@ -53,44 +53,8 @@ function spoopy.spoopy_spawn()
   
   Runtime:addEventListener( "enterFrame", move_spoopy)
   
-  local function hasCollided()
-    
-    if spoopySprite == nil then 
-      return false
-    end
 
-    local dx = spoopySprite.x - murder_children.x
-    local dy = spoopySprite.y - murder_children.y
-      
-    local distance = math.sqrt( dx*dx + dy*dy )
-		local objectSize = murder_children.x/2 + spoopySprite.x/2 
-      
-    if distance < objectSize then	
-      return true
-		end
-    return false
-    
-  end
-    
-  local function kill()
-  
-	if hasCollided() == true and murder_children.HP > 0 then
-		murder_children.HP = murder_children.HP - 1
-		print(murder_children.HP)
-		--murder_children.isDead = false
-	end
-	if murder_children.HP <=0 then
-		murder_children.kill(murder_children.sprite)
-		murder_children.sprite = nil
-		murder_children.isDead = true
-	end
-		
-  end
-  
-  kill_timer = timer.performWithDelay(2000, kill, 0)
-
-	
-  
+  local attack_timer = timer.performWithDelay(1000, spoopy_collision, 0)
 
 end
 

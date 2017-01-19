@@ -66,6 +66,7 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 			y = cookie_coordY_RNG,
 			time = math.random(3000, 5000),
 			transition = move_func,
+      onComplete = function() user_data.cps = user_data.cps - cps_eaten end
 		}
 		
 		if new_child.image ~= nil then
@@ -112,12 +113,18 @@ function murder_children.new(n_type, n_health, n_soul_reward, n_cps_eaten, n_mov
 	local function mc_touch( event )
 		if event.phase == "ended" and murder_children.HP > 0 then	
 			murder_children.HP = murder_children.HP - 1
-			print("tapped!")	
-		end
-		if murder_children.HP <= 0 then
-			murder_children.kill(new_child.image)
-			new_child.image = nil
-		end
+
+			print("tapped!")
+		end	
+		if(murder_children.HP <= 0) then
+			print("murdered!")
+      user_data.cps = user_data.cps + cps_eaten
+			transition.fadeOut( new_child.image, {time = 1000})
+			display.remove( new_child.image )
+			user_data.souls = user_data.souls + murder_children.soul_reward
+			murder_children.mc_count = murder_children.mc_count - 1 
+
+		end	
 	end
 	new_child.image:addEventListener( "touch", mc_touch)
 
